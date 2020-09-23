@@ -55,41 +55,41 @@ public class Movement : MonoBehaviour
         home_Pos[3, 2] = turnManager.Blue[2].transform.localPosition;
         home_Pos[3, 3] = turnManager.Blue[3].transform.localPosition;
 
-        current_pos[3, 0] = 15;
-        int current_Index = current_pos[3, 0];
-        current_Index += 0;
-        turnManager.Blue[0].gameObject.transform.position = get_Position("blue", current_Index);
-        playerManager.goti_Nikli("blue");
+        //current_pos[3, 0] = 15;
+        //int current_index = current_pos[3, 0];
+        //current_index += 0;
+        //turnmanager.blue[0].gameobject.transform.position = get_position("blue", current_index);
+        //playermanager.goti_nikli("blue");
 
-        players_Not_In_Home_Player.Add(3);
-        players_Not_In_Home_Goti.Add(0);
+        //players_not_in_home_player.add(3);
+        //players_not_in_home_goti.add(0);
 
-        current_pos[3, 1] = 13;
-        current_Index = current_pos[3, 1];
-        current_Index += 0;
-        turnManager.Blue[1].gameObject.transform.position = get_Position("blue", current_Index);
-        playerManager.goti_Nikli("blue");
+        //current_pos[3, 1] = 13;
+        //current_index = current_pos[3, 1];
+        //current_index += 0;
+        //turnmanager.blue[1].gameobject.transform.position = get_position("blue", current_index);
+        //playermanager.goti_nikli("blue");
 
-        players_Not_In_Home_Player.Add(3);
-        players_Not_In_Home_Goti.Add(1);
+        //players_not_in_home_player.add(3);
+        //players_not_in_home_goti.add(1);
 
-        current_pos[0, 0] = 0;
-        current_Index = current_pos[0, 0];
-        current_Index += 0;
-        turnManager.Red[0].gameObject.transform.position = get_Position("red", current_Index);
-        playerManager.goti_Nikli("red");
+        //current_pos[0, 0] = 0;
+        //current_index = current_pos[0, 0];
+        //current_index += 0;
+        //turnmanager.red[0].gameobject.transform.position = get_position("red", current_index);
+        //playermanager.goti_nikli("red");
 
-        players_Not_In_Home_Player.Add(0);
-        players_Not_In_Home_Goti.Add(0);
+        //players_not_in_home_player.add(0);
+        //players_not_in_home_goti.add(0);
 
-        current_pos[0, 1] = 53;
-        current_Index = current_pos[0, 1];
-        current_Index += 0;
-        turnManager.Red[1].gameObject.transform.position = get_Position("red", current_Index);
-        playerManager.goti_Nikli("red");
+        //current_pos[0, 1] = 53;
+        //current_index = current_pos[0, 1];
+        //current_index += 0;
+        //turnmanager.red[1].gameobject.transform.position = get_position("red", current_index);
+        //playermanager.goti_nikli("red");
 
-        players_Not_In_Home_Player.Add(0);
-        players_Not_In_Home_Goti.Add(1);
+        //players_not_in_home_player.add(0);
+        //players_not_in_home_goti.add(1);
     }
 
     public void show_Options(GameObject obj)
