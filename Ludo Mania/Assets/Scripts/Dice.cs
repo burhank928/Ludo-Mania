@@ -19,7 +19,8 @@ public class Dice : MonoBehaviour
     public List<GameObject> instants;
     public Canvas canvas;
     public Movement movement;
-    
+    bool check = true;
+
     void Start()
     {
         reset_Pos("red");
@@ -30,20 +31,20 @@ public class Dice : MonoBehaviour
 
     public void roll_Dice()
     {
-        int num = (Random.Range(1, 7));
+        //int num = (Random.Range(1, 7));
 
-        //int num;
+        int num;
 
-        //if (check)
-        //{
-        //    num = 2;
-        //    check = false;
-        //}
-        //else
-        //{
-        //    num = 4;
-        //    check = true;
-        //}
+        if (check)
+        {
+            num = 2;
+            check = false;
+        }
+        else
+        {
+            num = 4;
+            check = true;
+        }
 
         numbers.Add(num);
 

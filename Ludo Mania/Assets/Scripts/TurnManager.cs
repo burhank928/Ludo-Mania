@@ -29,9 +29,9 @@ public class TurnManager : MonoBehaviour
     {
         turn_Completed = false;
         number_Of_Players = 4;
-        player = Random.Range(0, number_Of_Players);
+        //player = Random.Range(0, number_Of_Players);
 
-        //player = 3;
+        player = 3;
 
         turn_Other_Players_Buttons_off();
         dice.turn_On_Animator_And_Button(player);
