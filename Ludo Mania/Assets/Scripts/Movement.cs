@@ -22,8 +22,6 @@ public class Movement : MonoBehaviour
     public GameObject Instant_Obj;
     public List<GameObject> Instants;
     public GameObject selected_Button_GameObject;
-    public List<int> Jora_Path_Name;
-    public List<int> Jora_Path_Player;
     public List<int> players_Not_In_Home_Player;
     public List<int> players_Not_In_Home_Goti;
 
@@ -64,7 +62,7 @@ public class Movement : MonoBehaviour
         players_Not_In_Home_Player.Add(3);
         players_Not_In_Home_Goti.Add(0);
 
-        current_pos[3, 1] = 13;
+        current_pos[3, 1] = 15;
         current_Index = current_pos[3, 1];
         current_Index += 0;
         turnManager.Blue[1].gameObject.transform.position = get_Position("blue", current_Index);
@@ -82,7 +80,7 @@ public class Movement : MonoBehaviour
         players_Not_In_Home_Player.Add(0);
         players_Not_In_Home_Goti.Add(0);
 
-        current_pos[0, 1] = 53;
+        current_pos[0, 1] = 54;
         current_Index = current_pos[0, 1];
         current_Index += 0;
         turnManager.Red[1].gameObject.transform.position = get_Position("red", current_Index);
@@ -167,18 +165,13 @@ public class Movement : MonoBehaviour
 
             dice.remove_Number(num);
         }
-        else if (!check_Any_Jora_In_Way(current_Index, num, button_No(obj.name)))
+        else if (!check_Any_Jora_In_Way(turnManager.turn_Of_Player_int(), button_No(obj.name), num))
         {
             current_Index += num;
             obj.transform.position = get_Position(turnManager.turn_Of(), current_Index);
             current_pos[turnManager.turn_Of_Player_int(), button_No(obj.name)] += num;
 
-            check_For_Jora_And_Add_In_List();
-
-            if (!is_Jora(turnManager.turn_Of_Player_int(), button_No(obj.name)))
-            {
-                check_If_Other_Goti_Piti(obj);
-            }
+            check_goti_Piti(obj);
 
             dice.remove_Number(num);
         }
@@ -234,77 +227,6 @@ public class Movement : MonoBehaviour
         }
     }
 
-    bool check_Any_Jora_In_Way(int current_Index, int num, int gtoi_Number)
-    {
-        int path_Name_of_Player_Turn = return_Path_Name(turnManager.turn_Of(), turnManager.turn_Of_Player_int(), gtoi_Number);
-
-        for (int player = 0; player < 4; player++)
-        {
-            if (player != turnManager.turn_Of_Player_int())
-            {
-                for (int goti_Number = 0; goti_Number < 4; goti_Number++)
-                {
-                    bool found_Jora = false;
-                    int path_Name = check_And_Get_Jora(player, goti_Number, ref found_Jora);
-                    
-                    if (found_Jora && (path_Name >= path_Name_of_Player_Turn && path_Name < path_Name_of_Player_Turn + num) && !is_Safe(turnManager.color_Of(player), current_pos[player, goti_Number]))
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    int check_And_Get_Jora(int player, int goti_Number, ref bool found_Jora)
-    {
-        for (int counter = goti_Number + 1; counter < 4; counter++)
-        {
-            if (current_pos[player, goti_Number] == current_pos[player, counter])
-            {
-                found_Jora = true;
-                return return_Path_Name(turnManager.color_Of(player), player, goti_Number);
-            }
-        }
-
-        return 0;
-    }
-
-    void check_If_Other_Goti_Piti(GameObject obj)
-    {
-        int current_Player_Path = return_Path_Name(turnManager.turn_Of(), turnManager.turn_Of_Player_int(), button_No(obj.name));
-
-        for (int player = 0; player < 4; player++)
-        {
-            if (player != turnManager.turn_Of_Player_int())
-            {
-                for (int goti_Number = 0; goti_Number < 4; goti_Number++)
-                {
-                    if ((current_Player_Path == return_Path_Name(turnManager.color_Of(player), player, goti_Number)) && !is_Safe(turnManager.color_Of(player), current_pos[player, goti_Number]))
-                    {
-                        var compenent = turnManager.return_Button(turnManager.color_Of(player), goti_Number);
-
-                        compenent.gameObject.transform.localPosition = home_Pos[player, goti_Number];
-                        playerManager.goti_Pitgai(turnManager.color_Of(player));
-                        current_pos[player, goti_Number] = 0;
-                        
-                        for(int counter=0; counter < players_Not_In_Home_Player.Count; counter++)
-                        {
-                            if (players_Not_In_Home_Player[counter] == player && players_Not_In_Home_Goti[counter] == goti_Number)
-                            {
-                                players_Not_In_Home_Player.RemoveAt(counter);
-                                players_Not_In_Home_Goti.RemoveAt(counter);
-                            }
-                        }
-
-                    }
-                }
-            }
-        }
-    }
-
     int return_Path_Name(string colour, int player, int goti_Number)
     {
         if (current_pos[player, goti_Number] <= 56)
@@ -352,36 +274,6 @@ public class Movement : MonoBehaviour
         return false;
     }
 
-    void check_For_Jora_And_Add_In_List()
-    {
-        for (int counter = 0; counter < turnManager.Number_Of_Players; counter++)
-        {
-            for (int counter1 = counter + 1; counter1 < turnManager.Number_Of_Players; counter1++)
-            {
-                if (current_pos[turnManager.turn_Of_Player_int(), counter] == current_pos[turnManager.turn_Of_Player_int(), counter1] && !is_Safe(turnManager.turn_Of(), current_pos[turnManager.turn_Of_Player_int(), counter]))
-                {
-                    Jora_Path_Player.Add(turnManager.turn_Of_Player_int());
-                    Jora_Path_Name.Add(return_Path_Name(turnManager.turn_Of(), turnManager.turn_Of_Player_int(), counter));
-                }
-            }
-        }
-    }
-
-    bool is_Jora(int player, int goti_Number)
-    {
-        int current_Player_Path = return_Path_Name(turnManager.turn_Of(), player, goti_Number);
-
-        for (int counter = 0; counter < Jora_Path_Name.Count; counter++)
-        {
-            if ((player != Jora_Path_Player[counter]) && (current_Player_Path == Jora_Path_Name[counter]))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool possible_To_Move()
     {
         for (int counter = 0; counter < 4; counter++)
@@ -393,6 +285,42 @@ public class Movement : MonoBehaviour
             if (is_Not_Goti_Home(turnManager.turn_Of_Player_int(), counter) && check_All_Numbers_For_Goti(turnManager.turn_Of_Player_int(), counter))
             {
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool check_All_Numbers_For_Goti(int player, int goti_Number)
+    {
+        for (int counter = 0; counter < dice.numbers.Count; counter++)
+        {
+            if (!check_Any_Jora_In_Way(player, goti_Number, dice.numbers[counter]) || is_puggai(player, goti_Number, dice.numbers[counter]))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool check_Any_Jora_In_Way(int player, int goti_Number, int num)
+    {
+        int source_Path_Name = return_Path_Name(turnManager.color_Of(player), player, goti_Number);
+
+        for (int counter = 1; counter < num; counter++)
+        {
+            for (int this_player = 0; this_player < 4; this_player++)
+            {
+                if (player != this_player)
+                {
+                    int count = get_How_Many_Goti_Are_Here(this_player, source_Path_Name + counter);
+
+                    if (count > 1)
+                    {
+                        return true;
+                    }
+                }
             }
         }
 
@@ -412,22 +340,9 @@ public class Movement : MonoBehaviour
         return false;
     }
 
-    bool check_All_Numbers_For_Goti(int player, int goti_Number)
-    {
-        for (int counter = 0; counter < dice.numbers.Count; counter++)
-        {
-            if (!check_Any_Jora_In_Way(current_pos[player, goti_Number], dice.numbers[counter], goti_Number) || is_puggai(player, goti_Number, dice.numbers[counter]))
-            {
-                return true;
-            } 
-        }
-
-        return false;
-    }
-
     bool is_puggai(int player, int goti_Number, int num)
     {
-        if (current_pos[player, goti_Number] + num == 57)
+        if (current_pos[player, goti_Number] + num == 56)
         {
             return true;
         }
@@ -453,5 +368,68 @@ public class Movement : MonoBehaviour
         {
             yellow_end[goti_Number].SetActive(true);
         }
+    }
+
+    // Trying New Way To Check If Token Is Getting Killed.
+
+    void check_goti_Piti(GameObject obj)
+    {
+        if (!is_Safe(turnManager.turn_Of(), current_pos[turnManager.turn_Of_Player_int(), button_No(obj.name)]))
+        {
+            int source_Path_Name = return_Path_Name(turnManager.turn_Of(), turnManager.turn_Of_Player_int(), button_No(obj.name));
+            int total_Gotis = get_How_Many_Goti_Are_Here(turnManager.turn_Of_Player_int(), source_Path_Name);
+
+            for (int player = 0; player < 4; player++)
+            {
+                if (turnManager.turn_Of_Player_int() != player)
+                {
+                    if (total_Gotis >= get_How_Many_Goti_Are_Here(player, source_Path_Name))
+                    {
+                        goti_Piti(player, source_Path_Name);
+                    }
+                }
+            }
+        }
+    }
+
+    void goti_Piti(int player, int source_Path_Name)
+    {
+        for (int goti_Number = 0; goti_Number < 4; goti_Number++)
+        {
+            if (return_Path_Name(turnManager.color_Of(player), player, goti_Number) == source_Path_Name)
+            {
+                var compenent = turnManager.return_Button(turnManager.color_Of(player), goti_Number);
+
+                compenent.gameObject.transform.localPosition = home_Pos[player, goti_Number];
+                playerManager.goti_Pitgai(turnManager.color_Of(player));
+                current_pos[player, goti_Number] = 0;
+
+                for (int counter = 0; counter < players_Not_In_Home_Player.Count; counter++)
+                {
+                    if (players_Not_In_Home_Player[counter] == player && players_Not_In_Home_Goti[counter] == goti_Number)
+                    {
+                        players_Not_In_Home_Player.RemoveAt(counter);
+                        players_Not_In_Home_Goti.RemoveAt(counter);
+                    }
+                }
+            }
+        }
+    }
+
+    int get_How_Many_Goti_Are_Here(int player, int source_Path_Name)
+    {
+        int count = 0;
+        int current_Player_Path;
+
+        for (int goti_Number = 0; goti_Number < 4; goti_Number++)
+        {
+            current_Player_Path = return_Path_Name(turnManager.color_Of(player), player, goti_Number);
+            if (current_Player_Path == source_Path_Name)
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 }

@@ -14,6 +14,9 @@ public class PlayerManager : MonoBehaviour
     int green_Goti_In_Home;
     int yellow_Goti_In_Home;
 
+    public Dice dice;
+    public TurnManager turnManager;
+
     private void Awake()
     {
         total_Blue_Goti = 4;
@@ -89,6 +92,8 @@ public class PlayerManager : MonoBehaviour
         {
             total_Yellow_Goti--;
         }
+
+        dice.turn_On_Animator_And_Button(turnManager.turn_Of_Player_int());
     }
 
     public void goti_Pitgai(string colour)
@@ -109,6 +114,8 @@ public class PlayerManager : MonoBehaviour
         {
             yellow_Goti_In_Home++;
         }
+
+        dice.turn_On_Animator_And_Button(turnManager.turn_Of_Player_int());
     }
 
     public void goti_Nikli(string colour)
