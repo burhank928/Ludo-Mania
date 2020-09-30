@@ -24,7 +24,7 @@ public class Movement : MonoBehaviour
     public GameObject selected_Button_GameObject;
     public List<int> players_Not_In_Home_Player;
     public List<int> players_Not_In_Home_Goti;
-
+    
     private void Awake()
     {
         home_Pos = new Vector3[4, 4];
@@ -71,7 +71,7 @@ public class Movement : MonoBehaviour
         players_Not_In_Home_Player.Add(3);
         players_Not_In_Home_Goti.Add(1);
 
-        current_pos[0, 0] = 0;
+        current_pos[0, 0] = 54;
         current_Index = current_pos[0, 0];
         current_Index += 0;
         turnManager.Red[0].gameObject.transform.position = get_Position("red", current_Index);
@@ -80,10 +80,10 @@ public class Movement : MonoBehaviour
         players_Not_In_Home_Player.Add(0);
         players_Not_In_Home_Goti.Add(0);
 
-        current_pos[0, 1] = 54;
+        current_pos[0, 1] = 0;
         current_Index = current_pos[0, 1];
         current_Index += 0;
-        turnManager.Red[1].gameObject.transform.position = get_Position("red", current_Index);
+        red_end[1].SetActive(true);
         playerManager.goti_Nikli("red");
 
         players_Not_In_Home_Player.Add(0);
@@ -383,7 +383,7 @@ public class Movement : MonoBehaviour
             {
                 if (turnManager.turn_Of_Player_int() != player)
                 {
-                    if (total_Gotis >= get_How_Many_Goti_Are_Here(player, source_Path_Name))
+                    if (total_Gotis == get_How_Many_Goti_Are_Here(player, source_Path_Name))
                     {
                         goti_Piti(player, source_Path_Name);
                     }

@@ -17,6 +17,8 @@ public class PlayerManager : MonoBehaviour
     public Dice dice;
     public TurnManager turnManager;
 
+    public List<string> winners;
+
     private void Awake()
     {
         total_Blue_Goti = 4;
@@ -28,6 +30,18 @@ public class PlayerManager : MonoBehaviour
         blue_Goti_In_Home = 4;
         green_Goti_In_Home = 4;
         yellow_Goti_In_Home = 4;
+    }
+
+    private void Update()
+    {
+        if (total_Red_Goti == 0 && total_Green_Goti == 0 && total_Yellow_Goti == 0 && total_Blue_Goti == 0)
+        {
+            for (int counter = 0; counter < winners.Count; counter++)
+            {
+                Debug.Log(winners[counter]);
+            }
+            Debug.Log("GameOver");
+        }
     }
 
     public bool all_In_Home(string colour)
@@ -91,6 +105,11 @@ public class PlayerManager : MonoBehaviour
         else if (colour == "yellow")
         {
             total_Yellow_Goti--;
+        }
+
+        if (all_puggai(colour))
+        {
+            winners.Add(colour);
         }
 
         dice.turn_On_Animator_And_Button(turnManager.turn_Of_Player_int());

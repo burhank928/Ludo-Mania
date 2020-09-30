@@ -13,6 +13,7 @@ public class TurnManager : MonoBehaviour
     public Button[] Green;
     public Button[] Yellow;
     public Button[] Blue;
+    public PlayerManager playerManager;
 
     public int Number_Of_Players
     {
@@ -39,7 +40,7 @@ public class TurnManager : MonoBehaviour
 
     private void Update()
     {
-        if (turn_Completed)
+        if (turn_Completed || playerManager.all_puggai(turn_Of()))
         {
             dice.numbers.Clear();
             dice.turn_Off_Animator_And_Button(player);
