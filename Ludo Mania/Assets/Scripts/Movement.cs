@@ -71,7 +71,7 @@ public class Movement : MonoBehaviour
         players_Not_In_Home_Player.Add(3);
         players_Not_In_Home_Goti.Add(1);
 
-        current_pos[0, 0] = 54;
+        current_pos[0, 0] = 2;
         current_Index = current_pos[0, 0];
         current_Index += 0;
         turnManager.Red[0].gameObject.transform.position = get_Position("red", current_Index);
@@ -83,7 +83,7 @@ public class Movement : MonoBehaviour
         current_pos[0, 1] = 0;
         current_Index = current_pos[0, 1];
         current_Index += 0;
-        red_end[1].SetActive(true);
+        turnManager.Red[1].gameObject.transform.position = get_Position("red", current_Index);
         playerManager.goti_Nikli("red");
 
         players_Not_In_Home_Player.Add(0);
@@ -135,15 +135,17 @@ public class Movement : MonoBehaviour
 
     public void move_Player(GameObject obj, int num)
     {
-        set_Position(obj, num);
+        bool check = false;
 
-        if (dice.numbers.Count == 0 || !possible_To_Move())
+        set_Position(obj, num, ref check);
+
+        if (!check && (dice.numbers.Count == 0 || !possible_To_Move()))
         {
             turnManager.Turn_Completed = true;
         }
     }
 
-    void set_Position(GameObject obj, int num)
+    void set_Position(GameObject obj, int num, ref bool check)
     {
         int current_Index = current_pos[turnManager.turn_Of_Player_int(), button_No(obj.name)];
 
@@ -163,6 +165,8 @@ public class Movement : MonoBehaviour
                 }
             }
 
+            check = true;
+
             dice.remove_Number(num);
         }
         else if (!check_Any_Jora_In_Way(turnManager.turn_Of_Player_int(), button_No(obj.name), num))
@@ -171,7 +175,7 @@ public class Movement : MonoBehaviour
             obj.transform.position = get_Position(turnManager.turn_Of(), current_Index);
             current_pos[turnManager.turn_Of_Player_int(), button_No(obj.name)] += num;
 
-            check_goti_Piti(obj);
+            check_goti_Piti(obj, ref check);
 
             dice.remove_Number(num);
         }
@@ -372,7 +376,7 @@ public class Movement : MonoBehaviour
 
     // Trying New Way To Check If Token Is Getting Killed.
 
-    void check_goti_Piti(GameObject obj)
+    void check_goti_Piti(GameObject obj, ref bool check)
     {
         if (!is_Safe(turnManager.turn_Of(), current_pos[turnManager.turn_Of_Player_int(), button_No(obj.name)]))
         {
@@ -383,9 +387,11 @@ public class Movement : MonoBehaviour
             {
                 if (turnManager.turn_Of_Player_int() != player)
                 {
-                    if (total_Gotis == get_How_Many_Goti_Are_Here(player, source_Path_Name))
+                    int player_Gotis = get_How_Many_Goti_Are_Here(player, source_Path_Name);
+                    if (player_Gotis > 0 && total_Gotis >= player_Gotis)
                     {
                         goti_Piti(player, source_Path_Name);
+                        check = true;
                     }
                 }
             }

@@ -90,19 +90,19 @@ public class PlayerManager : MonoBehaviour
 
     public void goti_Puggai(string colour)
     {
-        if (colour == "red")
+        if (colour == "red" && total_Red_Goti > 0)
         {
             total_Red_Goti--;
         }
-        else if (colour == "blue")
+        else if (colour == "blue" && total_Blue_Goti > 0)
         {
             total_Blue_Goti--;
         }
-        else if (colour == "green")
+        else if (colour == "green" && total_Green_Goti > 0)
         {
             total_Green_Goti--;
         }
-        else if (colour == "yellow")
+        else if (colour == "yellow" && total_Yellow_Goti > 0)
         {
             total_Yellow_Goti--;
         }
@@ -117,19 +117,19 @@ public class PlayerManager : MonoBehaviour
 
     public void goti_Pitgai(string colour)
     {
-        if (colour == "red")
+        if (colour == "red" && red_Goti_In_Home < 4)
         {
             red_Goti_In_Home++;
         }
-        else if (colour == "blue")
+        else if (colour == "blue" && blue_Goti_In_Home < 4)
         {
             blue_Goti_In_Home++;
         }
-        else if (colour == "green")
+        else if (colour == "green" && green_Goti_In_Home < 4)
         {
             green_Goti_In_Home++;
         }
-        else if (colour == "yellow")
+        else if (colour == "yellow" && yellow_Goti_In_Home < 4)
         {
             yellow_Goti_In_Home++;
         }
@@ -139,19 +139,19 @@ public class PlayerManager : MonoBehaviour
 
     public void goti_Nikli(string colour)
     {
-        if (colour == "red")
+        if (colour == "red" && red_Goti_In_Home > 0)
         {
             red_Goti_In_Home--;
         }
-        else if (colour == "blue")
+        else if (colour == "blue" && blue_Goti_In_Home > 0)
         {
             blue_Goti_In_Home--;
         }
-        else if (colour == "green")
+        else if (colour == "green" && green_Goti_In_Home > 0)
         {
             green_Goti_In_Home--;
         }
-        else if (colour == "yellow")
+        else if (colour == "yellow" && yellow_Goti_In_Home > 0)
         {
             yellow_Goti_In_Home--;
         }
