@@ -6153,6 +6153,11 @@ MonoBehaviour:
   - {fileID: 1232413627}
   - {fileID: 101772628}
   Instant_Obj: {fileID: 3171723584509766631, guid: bf1b0a84a4a8c6b49a832f57815c90d9, type: 3}
+  Instant_Obj_Sprites:
+  - {fileID: 21300000, guid: 584f11f248595a34aae18d3054216eb6, type: 3}
+  - {fileID: 21300000, guid: cbb008438ba046948843f9fb45e82d6e, type: 3}
+  - {fileID: 21300000, guid: 19e612cc12cd45943a2fc6b297f813d9, type: 3}
+  - {fileID: 21300000, guid: c390e07eb0d5eb3489b932f591cb6a3f, type: 3}
   Instants: []
   selected_Button_GameObject: {fileID: 0}
   players_Not_In_Home_Player: 

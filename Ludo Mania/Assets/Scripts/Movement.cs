@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Movement : MonoBehaviour
@@ -20,6 +21,7 @@ public class Movement : MonoBehaviour
     public Vector3[,] home_Pos;
     int[,] current_pos;
     public GameObject Instant_Obj;
+    public Sprite[] Instant_Obj_Sprites;
     public List<GameObject> Instants;
     public GameObject selected_Button_GameObject;
     public List<int> players_Not_In_Home_Player;
@@ -123,6 +125,8 @@ public class Movement : MonoBehaviour
             
             pos.x -= x;
             pos.y += 40;
+
+            Instant_Obj.GetComponent<Image>().sprite = Instant_Obj_Sprites[turnManager.turn_Of_Player_int()];
 
             for (int counter = 0; counter < dice.numbers.Count; counter++)
             {
