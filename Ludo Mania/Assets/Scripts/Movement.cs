@@ -54,44 +54,6 @@ public class Movement : MonoBehaviour
         home_Pos[3, 1] = turnManager.Blue[1].transform.localPosition;
         home_Pos[3, 2] = turnManager.Blue[2].transform.localPosition;
         home_Pos[3, 3] = turnManager.Blue[3].transform.localPosition;
-
-        current_pos[3, 0] = 13;
-        int current_Index = current_pos[3, 0];
-        current_Index += 0;
-        turnManager.Blue[0].gameObject.transform.position = get_Position("blue", current_Index);
-        playerManager.goti_Nikli("blue");
-
-        players_Not_In_Home_Player.Add(3);
-        players_Not_In_Home_Goti.Add(0);
-
-        current_pos[3, 1] = 13;
-        current_Index = current_pos[3, 1];
-        current_Index += 0;
-        turnManager.Blue[1].gameObject.transform.position = get_Position("blue", current_Index);
-        playerManager.goti_Nikli("blue");
-
-        players_Not_In_Home_Player.Add(3);
-        players_Not_In_Home_Goti.Add(1);
-
-        current_pos[0, 0] = 0;
-        current_Index = current_pos[0, 0];
-        current_Index += 0;
-        turnManager.Red[0].gameObject.transform.position = get_Position("red", current_Index);
-        playerManager.goti_Nikli("red");
-
-        players_Not_In_Home_Player.Add(0);
-        players_Not_In_Home_Goti.Add(0);
-
-        current_pos[0, 1] = 0;
-        current_Index = current_pos[0, 1];
-        current_Index += 0;
-        turnManager.Red[1].gameObject.transform.position = get_Position("red", current_Index);
-        playerManager.goti_Nikli("red");
-
-        players_Not_In_Home_Player.Add(0);
-        players_Not_In_Home_Goti.Add(1);
-
-        add_Gap_Between_Goti_At(red_path[0].position, 1);
     }
 
     public void show_Options(GameObject obj)
