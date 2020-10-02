@@ -60,11 +60,11 @@ public class Movement : MonoBehaviour
     {
         if (obj.transform.localPosition == home_Pos[turnManager.turn_Of_Player_int(), button_No(obj.name)] && dice.is_Six())
         {
-            move_Player(obj, 0);
             dice.remove_Number(6);
             playerManager.goti_Nikli(turnManager.turn_Of());
             players_Not_In_Home_Player.Add(turnManager.turn_Of_Player_int());
             players_Not_In_Home_Goti.Add(button_No(obj.name));
+            move_Player(obj, 0);
         }
         else if (obj.transform.localPosition != home_Pos[turnManager.turn_Of_Player_int(), button_No(obj.name)])
         {
@@ -96,6 +96,7 @@ public class Movement : MonoBehaviour
                 instant.transform.localPosition = pos;
                 instant.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = dice.numbers[counter].ToString();
                 pos.x += 41;
+                instant.transform.SetParent(FindObjectOfType<Canvas>().transform);
                 Instants.Add(instant);
             }
         }
@@ -275,11 +276,24 @@ public class Movement : MonoBehaviour
 
     bool check_All_Numbers_For_Goti(int player, int goti_Number)
     {
-        for (int counter = 0; counter < dice.numbers.Count; counter++)
+        if (current_pos[player, goti_Number] >= 51 && current_pos[player, goti_Number] <= 55)
         {
-            if (!check_Any_Jora_In_Way(player, goti_Number, dice.numbers[counter]) || is_puggai(player, goti_Number, dice.numbers[counter]))
+            for (int counter = 0; counter < dice.numbers.Count; counter++)
             {
-                return true;
+                if (current_pos[player, goti_Number] + dice.numbers[counter] <= 56)
+                {
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            for (int counter = 0; counter < dice.numbers.Count; counter++)
+            {
+                if (!check_Any_Jora_In_Way(player, goti_Number, dice.numbers[counter]))
+                {
+                    return true;
+                }
             }
         }
 
@@ -298,7 +312,7 @@ public class Movement : MonoBehaviour
                 {
                     int count = get_How_Many_Goti_Are_Here(this_player, source_Path_Name + counter);
 
-                    if (count > 1 && !is_Safe(turnManager.color_Of(player), current_pos[player, goti_Number] + num))
+                    if (count > 1 && !is_Safe(turnManager.color_Of(player), current_pos[player, goti_Number] + counter))
                     {
                         return true;
                     }
@@ -408,7 +422,7 @@ public class Movement : MonoBehaviour
         for (int goti_Number = 0; goti_Number < 4; goti_Number++)
         {
             current_Player_Path = return_Path_Name(turnManager.color_Of(player), player, goti_Number);
-            if (current_Player_Path == source_Path_Name)
+            if (current_Player_Path == source_Path_Name && turnManager.return_Button(turnManager.color_Of(player), goti_Number).gameObject.transform.localPosition != home_Pos[player, goti_Number])
             {
                 count++;
             }
