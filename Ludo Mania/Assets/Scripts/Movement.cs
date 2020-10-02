@@ -53,7 +53,7 @@ public class Movement : MonoBehaviour
         home_Pos[3, 2] = turnManager.Blue[2].transform.localPosition;
         home_Pos[3, 3] = turnManager.Blue[3].transform.localPosition;
 
-        current_pos[3, 0] = 15;
+        current_pos[3, 0] = 13;
         int current_Index = current_pos[3, 0];
         current_Index += 0;
         turnManager.Blue[0].gameObject.transform.position = get_Position("blue", current_Index);
@@ -62,7 +62,7 @@ public class Movement : MonoBehaviour
         players_Not_In_Home_Player.Add(3);
         players_Not_In_Home_Goti.Add(0);
 
-        current_pos[3, 1] = 15;
+        current_pos[3, 1] = 13;
         current_Index = current_pos[3, 1];
         current_Index += 0;
         turnManager.Blue[1].gameObject.transform.position = get_Position("blue", current_Index);
@@ -71,7 +71,7 @@ public class Movement : MonoBehaviour
         players_Not_In_Home_Player.Add(3);
         players_Not_In_Home_Goti.Add(1);
 
-        current_pos[0, 0] = 2;
+        current_pos[0, 0] = 0;
         current_Index = current_pos[0, 0];
         current_Index += 0;
         turnManager.Red[0].gameObject.transform.position = get_Position("red", current_Index);
@@ -88,6 +88,8 @@ public class Movement : MonoBehaviour
 
         players_Not_In_Home_Player.Add(0);
         players_Not_In_Home_Goti.Add(1);
+
+        add_Gap_Between_Goti_At(red_path[0].position, 1);
     }
 
     public void show_Options(GameObject obj)
@@ -109,25 +111,25 @@ public class Movement : MonoBehaviour
 
             for (int counter = 0; counter < temp; counter++)
             {
-                x += 10;
+                x += 41;
             }
 
             if (dice.numbers.Count % 2 == 0)
             {
-                x -= 5;
+                x -= 20;
             }
 
             Vector3 pos = obj.transform.localPosition;
-
+            
             pos.x -= x;
-            pos.y += 11;
+            pos.y += 40;
 
             for (int counter = 0; counter < dice.numbers.Count; counter++)
             {
                 var instant = Instantiate(Instant_Obj, new Vector3(0, 0, 0), Quaternion.identity, obj.transform.parent.transform);
                 instant.transform.localPosition = pos;
                 instant.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = dice.numbers[counter].ToString();
-                pos.x += 10;
+                pos.x += 41;
                 Instants.Add(instant);
             }
         }
@@ -148,6 +150,8 @@ public class Movement : MonoBehaviour
     void set_Position(GameObject obj, int num, ref bool check)
     {
         int current_Index = current_pos[turnManager.turn_Of_Player_int(), button_No(obj.name)];
+        Vector3 old_pos = obj.transform.position;
+        int old_Source_Path_Name = return_Path_Name(turnManager.turn_Of(), turnManager.turn_Of_Player_int(), button_No(obj.name));
 
         if (is_puggai(turnManager.turn_Of_Player_int(), button_No(obj.name), num)) 
         {
@@ -164,6 +168,8 @@ public class Movement : MonoBehaviour
                     players_Not_In_Home_Goti.RemoveAt(counter);
                 }
             }
+            
+            add_Gap_Between_Goti_At(old_pos, old_Source_Path_Name);
 
             check = true;
 
@@ -176,6 +182,9 @@ public class Movement : MonoBehaviour
             current_pos[turnManager.turn_Of_Player_int(), button_No(obj.name)] += num;
 
             check_goti_Piti(obj, ref check);
+
+            add_Gap_Between_Goti_At(obj.transform.position, return_Path_Name(turnManager.turn_Of(), turnManager.turn_Of_Player_int(), button_No(obj.name)));
+            add_Gap_Between_Goti_At(old_pos, old_Source_Path_Name);
 
             dice.remove_Number(num);
         }
@@ -437,5 +446,61 @@ public class Movement : MonoBehaviour
         }
 
         return count;
+    }
+
+    void add_Gap_Between_Goti_At(Vector3 source_Path_Name_Pos, int source_Path_Name)
+    {
+        List<GameObject> gotis = return_Gotis_At(source_Path_Name);
+        int no_Of_Gotis = gotis.Count;
+        Vector3 pos = new Vector3();
+        Vector3 change_Pos = new Vector3();
+
+        if ((source_Path_Name >= 6 && source_Path_Name <= 18) || (source_Path_Name >= 32 && source_Path_Name <= 44) || (source_Path_Name >= 67 && source_Path_Name <= 74))
+        {
+            pos.y = 4 * Convert.ToInt32(gotis.Count / 2);
+
+            if (no_Of_Gotis % 2 == 0)
+            {
+                pos.y -= 2f;
+            }
+
+            change_Pos.y = 4;
+        }
+        else
+        {
+            pos.x = 4 * Convert.ToInt32(gotis.Count / 2);
+
+            if (no_Of_Gotis % 2 == 0)
+            {
+                pos.x -= 2f;
+            }
+
+            change_Pos.x = 4;
+        }
+
+        for (int counter = 0; counter < gotis.Count; counter++)
+        {
+            gotis[counter].transform.position = source_Path_Name_Pos;
+            gotis[counter].transform.localPosition -= pos;
+            pos -= change_Pos;
+        }
+    }
+
+    List<GameObject> return_Gotis_At(int source_Path_Name)
+    {
+        List<GameObject> objs = new List<GameObject>();
+
+        for (int player = 0; player < 4; player++)
+        {
+            for (int goti_Number = 0; goti_Number < 4; goti_Number++)
+            {
+                if (source_Path_Name == return_Path_Name(turnManager.color_Of(player), player, goti_Number) && turnManager.return_Button(turnManager.color_Of(player), goti_Number).gameObject.transform.localPosition != home_Pos[player, goti_Number])
+                {
+                    objs.Add(turnManager.return_Button(turnManager.color_Of(player), goti_Number).gameObject);
+                }
+            }
+        }
+
+        return objs;
     }
 }

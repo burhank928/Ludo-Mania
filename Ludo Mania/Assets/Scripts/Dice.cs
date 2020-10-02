@@ -142,41 +142,41 @@ public class Dice : MonoBehaviour
         if (color == "red")
         {
             pos = red_Pos;
-            red_Pos.x += 11;
+            red_Pos.x += 50;
             if ((instants.Count) % 5 == 0)
             {
-                red_Pos.x = -75;
-                red_Pos.y -= 11;
+                red_Pos.x = -300;
+                red_Pos.y -= 50;
             }
         }
         else if (color == "green")
         {
             pos = green_Pos;
-            green_Pos.x += 11;
+            green_Pos.x += 50;
             if ((instants.Count) % 5 == 0)
             {
-                green_Pos.x = -75;
-                green_Pos.y += 11;
+                green_Pos.x = -300;
+                green_Pos.y += 50;
             }
         }
         else if (color == "yellow")
         {
             pos = yellow_Pos;
-            yellow_Pos.x -= 11;
+            yellow_Pos.x -= 50;
             if ((instants.Count) % 5 == 0)
             {
-                yellow_Pos.x = 75;
-                yellow_Pos.y += 11;
+                yellow_Pos.x = 300;
+                yellow_Pos.y += 50;
             }
         }
         else
         {
             pos = blue_Pos;
-            blue_Pos.x -= 11;
+            blue_Pos.x -= 50;
             if ((instants.Count) % 5 == 0)
             {
-                blue_Pos.x = 75;
-                blue_Pos.y -= 11;
+                blue_Pos.x = 300;
+                blue_Pos.y -= 50;
             }
         }
 
@@ -187,26 +187,26 @@ public class Dice : MonoBehaviour
     {
         if (color == "red")
         {
-            red_Pos.x = -75;
-            red_Pos.y = -107;
+            red_Pos.x = -300;
+            red_Pos.y = -430;
             red_Pos.z = 0;
         }
         else if (color == "green")
         {
-            green_Pos.x = -75;
-            green_Pos.y = 107;
+            green_Pos.x = -300;
+            green_Pos.y = 430;
             green_Pos.z = 0;
         }
         else if (color == "yellow")
         {
-            yellow_Pos.x = 75;
-            yellow_Pos.y = 107;
+            yellow_Pos.x = 300;
+            yellow_Pos.y = 430;
             yellow_Pos.z = 0;
         }
         else
         {
-            blue_Pos.x = 75;
-            blue_Pos.y = -107;
+            blue_Pos.x = 300;
+            blue_Pos.y = -430;
             blue_Pos.z = 0;
         }
     }
