@@ -99,25 +99,28 @@ public class Dice : MonoBehaviour
 
     public void remove_Number(int num)
     {
-        bool check = true;
-
-        for (int counter = 0; check; counter++)
+        if (num >= 1 && num <= 6)
         {
-            if (numbers[counter] == num)
+            bool check = true;
+
+            for (int counter = 0; check; counter++)
             {
-                numbers.RemoveAt(counter);
-                var temp = instants[counter];
-                instants.RemoveAt(counter);
-                Destroy(temp);
-                check = false;
+                if (numbers[counter] == num)
+                {
+                    numbers.RemoveAt(counter);
+                    var temp = instants[counter];
+                    instants.RemoveAt(counter);
+                    Destroy(temp);
+                    check = false;
+                }
             }
-        }
 
-        reset_Pos(turnManager.turn_Of());
+            reset_Pos(turnManager.turn_Of());
 
-        for (int counter = 0; counter < instants.Count; counter++)
-        {
-            set_Position(instants[counter], turnManager.turn_Of());
+            for (int counter = 0; counter < instants.Count; counter++)
+            {
+                set_Position(instants[counter], turnManager.turn_Of());
+            }
         }
     }
 

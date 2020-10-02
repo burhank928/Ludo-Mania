@@ -150,7 +150,10 @@ public class Movement : MonoBehaviour
             check_goti_Piti(obj, ref check);
 
             add_Gap_Between_Goti_At(obj.transform.position, return_Path_Name(turnManager.turn_Of(), turnManager.turn_Of_Player_int(), button_No(obj.name)));
-            add_Gap_Between_Goti_At(old_pos, old_Source_Path_Name);
+            if (num != 0)
+            {
+                add_Gap_Between_Goti_At(old_pos, old_Source_Path_Name);
+            }
 
             dice.remove_Number(num);
         }
@@ -295,7 +298,7 @@ public class Movement : MonoBehaviour
                 {
                     int count = get_How_Many_Goti_Are_Here(this_player, source_Path_Name + counter);
 
-                    if (count > 1)
+                    if (count > 1 && !is_Safe(turnManager.color_Of(player), current_pos[player, goti_Number] + num))
                     {
                         return true;
                     }
@@ -417,7 +420,6 @@ public class Movement : MonoBehaviour
     void add_Gap_Between_Goti_At(Vector3 source_Path_Name_Pos, int source_Path_Name)
     {
         List<GameObject> gotis = return_Gotis_At(source_Path_Name);
-        int no_Of_Gotis = gotis.Count;
         Vector3 pos = new Vector3();
         Vector3 change_Pos = new Vector3();
 
@@ -425,7 +427,7 @@ public class Movement : MonoBehaviour
         {
             pos.y = 4 * Convert.ToInt32(gotis.Count / 2);
 
-            if (no_Of_Gotis % 2 == 0)
+            if (gotis.Count % 2 == 0)
             {
                 pos.y -= 2f;
             }
@@ -436,7 +438,7 @@ public class Movement : MonoBehaviour
         {
             pos.x = 4 * Convert.ToInt32(gotis.Count / 2);
 
-            if (no_Of_Gotis % 2 == 0)
+            if (gotis.Count % 2 == 0)
             {
                 pos.x -= 2f;
             }
