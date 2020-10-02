@@ -105,40 +105,40 @@ public class TurnManager : MonoBehaviour
         {
             for (int counter = 0; counter < 4; counter++)
             {
-                Red[counter].enabled = true;
-                Green[counter].enabled = false;
-                Yellow[counter].enabled = false;
-                Blue[counter].enabled = false;
+                Red[counter].gameObject.GetComponent<Image>().raycastTarget = true;
+                Green[counter].gameObject.GetComponent<Image>().raycastTarget = false;
+                Yellow[counter].gameObject.GetComponent<Image>().raycastTarget = false;
+                Blue[counter].gameObject.GetComponent<Image>().raycastTarget = false;
             }
         }
         else if (player == 1)
         {
             for (int counter = 0; counter < 4; counter++)
             {
-                Red[counter].enabled = false;
-                Green[counter].enabled = true;
-                Yellow[counter].enabled = false;
-                Blue[counter].enabled = false;
+                Red[counter].gameObject.GetComponent<Image>().raycastTarget = false;
+                Green[counter].gameObject.GetComponent<Image>().raycastTarget = true;
+                Yellow[counter].gameObject.GetComponent<Image>().raycastTarget = false;
+                Blue[counter].gameObject.GetComponent<Image>().raycastTarget = false;
             }
         }
         else if (player == 2)
         {
             for (int counter = 0; counter < 4; counter++)
             {
-                Red[counter].enabled = false;
-                Green[counter].enabled = false;
-                Yellow[counter].enabled = true;
-                Blue[counter].enabled = false;
+                Red[counter].gameObject.GetComponent<Image>().raycastTarget = false;
+                Green[counter].gameObject.GetComponent<Image>().raycastTarget = false;
+                Yellow[counter].gameObject.GetComponent<Image>().raycastTarget = true;
+                Blue[counter].gameObject.GetComponent<Image>().raycastTarget = false;
             }
         }
         else
         {
             for (int counter = 0; counter < 4; counter++)
             {
-                Red[counter].enabled = false;
-                Green[counter].enabled = false;
-                Yellow[counter].enabled = false;
-                Blue[counter].enabled = true;
+                Red[counter].gameObject.GetComponent<Image>().raycastTarget = false;
+                Green[counter].gameObject.GetComponent<Image>().raycastTarget = false;
+                Yellow[counter].gameObject.GetComponent<Image>().raycastTarget = false;
+                Blue[counter].gameObject.GetComponent<Image>().raycastTarget = true;
             }
         }
     }
